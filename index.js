@@ -1,5 +1,4 @@
 const PORT       = process.env.PORT || 8080;
-const ENV        = process.env.ENV || "development";
 const express    = require("express");
 const app        = express();
 
@@ -25,9 +24,19 @@ Papa.parse(testFile, {
 console.log(testRows.data);
 
 app.get("/", (req, res) => {
-  res.render("index", { testRows });
+  res.render("index");
 });
 
-app.listen(PORT, process.env.IP, function(){
+app.post("/", (req, res) => {
+  console.log(req);
+});
+
+
+app.get("/schedule", (req, res) => {
+  const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  res.render("schedule", { week });
+})
+
+app.listen(PORT, function(){
   console.log(`Example app listening on port ${PORT}`);
 });
