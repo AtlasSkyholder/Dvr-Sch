@@ -32,21 +32,21 @@ app.get("/", (req, res) => {
 
 app.post("/", upload.single('myfile'), (req, res) => {
   const testFilePath = csvFile;
-const testFile = fs.readFileSync(testFilePath, "utf8");
+  const testFile = fs.readFileSync(testFilePath, "utf8");
 
-const testRows = {};
-Papa.parse(testFile, {
-  header: true,
-  skipEmptyLines: true,
-  complete: function(results) {
-    testRows.data = results.data;
-    testRows.errors = results.errors;
-    testRows.meta = results.meta;
-  }
-})
+  const testRows = {};
+  Papa.parse(testFile, {
+    header: true,
+    skipEmptyLines: true,
+    complete: function(results) {
+      testRows.data = results.data;
+      testRows.errors = results.errors;
+      testRows.meta = results.meta;
+    }
+  })
 
-csvData = testRows.data;
-res.redirect("schedule");
+  csvData = testRows.data;
+  res.redirect("schedule");
 
 });
 

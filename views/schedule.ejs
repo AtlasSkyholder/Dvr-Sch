@@ -2,14 +2,14 @@
 <html>
   <head>
     <title>Driver Scheduller</title>
-    <link rel="stylesheet" type="css" href="/assets/styles.css">
+    <link rel="stylesheet" src="/assets/css/styles.css" type="text/css" />
   </head>
   <body>
     
     <div id="nav"></div>
-    <div id="week">
+    <div class="week">
       <% for (let j = 0; j < week.length; j++) { %>
-        <div class="weekBlock">
+        <div>
           <p><%= week[j] %></p>
         </div> 
       <% } %>
