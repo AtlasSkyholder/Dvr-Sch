@@ -1,0 +1,16 @@
+#nav {
+  height:100px;
+  background-color: pink;
+}
+
+#week {
+  height: 100px;
+
+}
+
+.weekBlock {
+  height: 100px;
+  width: 100px;
+  margin: 0px 2px 0px 2px;
+  border: 5px solid black;
+}

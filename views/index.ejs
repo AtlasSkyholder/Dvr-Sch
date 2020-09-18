@@ -2,24 +2,14 @@
 <html>
   <head>
     <title>Driver Scheduller</title>
-
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('input[type="file"]').change(function(e){
-            var fileName = e.target.files[0].name;
-            alert('The file "' + fileName +  '" has been selected.');
-        });
-    });
-</script>
   </head>
   <body>
 
     <h3>Show a file-select field which allows multiple files:</h3>
-    <form action="/" method="POST">
+    <form action="/" method="POST" enctype="multipart/form-data">
       <label for="myfile">Select files:</label>
       <input type="file" id="myfile" name="myfile" multiple><br><br>
-      <input type="submit">
+      <input type="submit" value="Submit">
     </form>
     
   </body>

@@ -1,13 +1,37 @@
 const PORT       = process.env.PORT || 8080;
 const express    = require("express");
+const multer = require('multer');
+const path = require('path');
+
 const app        = express();
 
 app.set("view engine", "ejs");
-app.use(express.static("public"));
+app.use(express.static(__dirname + '/public'));
 
 const Papa = require('papaparse');
 const fs = require('fs');
-const testFilePath = 'test.csv';
+let csvFile; // name for file to be parsed after POST
+let csvData; // name for data of csv
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+      console.log(file);
+      csvFile = file.originalname;
+      cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+app.get("/", (req, res) => {
+  res.render("index");
+});
+
+app.post("/", upload.single('myfile'), (req, res) => {
+  const testFilePath = csvFile;
 const testFile = fs.readFileSync(testFilePath, "utf8");
 
 const testRows = {};
@@ -21,20 +45,17 @@ Papa.parse(testFile, {
   }
 })
 
-console.log(testRows.data);
+csvData = testRows.data;
+res.redirect("schedule");
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
-app.post("/", (req, res) => {
-  console.log(req);
 });
 
 
 app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  res.render("schedule", { week });
+
+  console.log(csvData);
+  res.render("schedule", { week, csvData });
 })
 
 app.listen(PORT, function(){

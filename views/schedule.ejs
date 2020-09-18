@@ -2,17 +2,26 @@
 <html>
   <head>
     <title>Driver Scheduller</title>
+    <link rel="stylesheet" type="css" href="/assets/styles.css">
   </head>
   <body>
     
     <div id="nav"></div>
-    <div id="week"></div>
+    <div id="week">
+      <% for (let j = 0; j < week.length; j++) { %>
+        <div class="weekBlock">
+          <p><%= week[j] %></p>
+        </div> 
+      <% } %>
+    </div>
+
+      <% for (let i = 0; i < csvData.length; i++) { %>
+        <h2><%= csvData[i].name %></h2>
+        <h2><%= csvData[i].age %></h2>
+        <h2><%= csvData[i].city %></h2>
+      <% } %> 
 
 
-    <% for (let i = 0; i < testRows.data.length; i++) { %>
-      <h2><%= testRows.data[i].name %></h2>
-      <h2><%= testRows.data[i].age %></h2>
-      <h2><%= testRows.data[i].city %></h2>
-    <% } %>
+
   </body>
 </html>
