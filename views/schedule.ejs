@@ -2,11 +2,14 @@
 <html>
   <head>
     <title>Driver Scheduller</title>
-    <link rel="stylesheet" src="/assets/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" />
   </head>
   <body>
     
-    <div id="nav"></div>
+
+    <%- include('Partials/_nav') %>
+
+
     <div class="week">
       <% for (let j = 0; j < week.length; j++) { %>
         <div>
@@ -15,11 +18,11 @@
       <% } %>
     </div>
 
-      <% for (let i = 0; i < csvData.length; i++) { %>
-        <h2><%= csvData[i].name %></h2>
-        <h2><%= csvData[i].age %></h2>
-        <h2><%= csvData[i].city %></h2>
-      <% } %> 
+    <% for (let i = 0; i < csvData.length; i++) { %>
+      <h2><%= csvData[i].name %></h2>
+      <h2><%= csvData[i].age %></h2>
+      <h2><%= csvData[i].city %></h2>
+    <% } %> 
 
 
 

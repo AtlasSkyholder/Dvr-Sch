@@ -2,6 +2,9 @@
   height:100px;
   width: 800px;
   background-color: pink;
+  display: flex;
+  flex-wrap: nowrap;
+
 }
 
 .week {
@@ -13,11 +16,7 @@
 
 .week div {
   height: 50px;
-  width: 50px;
+  width: 75px;
   margin: 0px 2px 0px 2px;
   border: 5px solid black;
-}
-
-p {
-  color: yellow;
 }

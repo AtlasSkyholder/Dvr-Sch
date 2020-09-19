@@ -6,7 +6,7 @@ const path = require('path');
 const app        = express();
 
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname));
 
 const Papa = require('papaparse');
 const fs = require('fs');
