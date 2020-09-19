@@ -10,13 +10,38 @@
 .week {
   display: flex;
   flex-wrap: nowrap;
-  height: 100px;
+  height: 50px;
   width: 800px;
 }
 
 .week div {
-  height: 50px;
-  width: 75px;
-  margin: 0px 2px 0px 2px;
+  height: 40px;
+  width: 90px;
   border: 5px solid black;
+  text-align: center;
+}
+
+#bigboard {
+  height: 550px;
+  width: 800px;
+  margin-top: 0px;
+}
+
+.column {
+  width: 100px;
+  height: 550px;
+  margin-top: 0px;
+}
+
+.column div {
+  height: 40px;
+  width: 90px;
+  border: 5px solid black;
+  text-align: center;
+}
+
+.column p {
+  height: 15px;
+  margin: 0px;
+  text-align: center;
 }

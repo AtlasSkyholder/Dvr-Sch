@@ -5,6 +5,8 @@ const path = require('path');
 
 const app        = express();
 
+const tom = require('./assets/data/tom');
+
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
 
@@ -56,7 +58,7 @@ app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   console.log(csvData);
-  res.render("schedule", { week, csvData, weekNumber });
+  res.render("schedule", { week, csvData, weekNumber, tom });
 })
 
 app.listen(PORT, function(){
