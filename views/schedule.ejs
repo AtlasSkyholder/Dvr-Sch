@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" />
   </head>
   <body>
-    
+    <% let number = weekNumber %>
 
     <%- include('Partials/_nav') %>
 
@@ -22,8 +22,24 @@
       <h2><%= csvData[i].name %></h2>
       <h2><%= csvData[i].age %></h2>
       <h2><%= csvData[i].city %></h2>
-    <% } %> 
+    <% } %>
 
+
+    <script>
+
+      function add(){
+        let num = parseInt(document.getElementById('wkNum').innerHTML);
+        document.getElementById('wkNum').innerHTML= num + 1;
+      }
+
+      function subtract(){
+        let num = parseInt(document.getElementById('wkNum').innerHTML);
+        if (num > 1) {
+          document.getElementById('wkNum').innerHTML= num - 1;
+        }
+      }
+
+    </script>
 
 
   </body>

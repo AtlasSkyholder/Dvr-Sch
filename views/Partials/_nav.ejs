@@ -5,9 +5,9 @@
     <option value="Lindsay">Lindsay</option>
     <option value="Drexel">Drexel</option>
   </select>
-  <img id="left" src="../../assets/images/left.png" width="100" height="50" onclick="document.getElementById('wkNum').innerHTML=Date()">
-  <p>Week <span id="wkNum"></span></p>
-  <img id="right" src="../../assets/images/right.png" width="100" height="50">
+  <img id="left" src="../../assets/images/left.png" width="100" height="50" onclick="subtract()">
+  <p>Week <span id="wkNum"><%- weekNumber %></span></p>
+  <img id="right" src="../../assets/images/right.png" width="100" height="50" onclick="add()">
 
     <form action="/" id="days">
     <input type="submit" value="Download Schedule">

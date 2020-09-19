@@ -12,6 +12,7 @@ const Papa = require('papaparse');
 const fs = require('fs');
 let csvFile; // name for file to be parsed after POST
 let csvData; // name for data of csv
+let weekNumber = 1; // variable for cycling through the weeks
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -55,7 +56,7 @@ app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   console.log(csvData);
-  res.render("schedule", { week, csvData });
+  res.render("schedule", { week, csvData, weekNumber });
 })
 
 app.listen(PORT, function(){
