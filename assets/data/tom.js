@@ -6,7 +6,7 @@
 // Events - 0: nothing, 1: Pickup goods, 2: Deliver goods, 3: Other
 
 let data = {
-  name: "Tom",
+  name: 'Tom',
   schedule: [
               [1,8,0],[1,9,0],[1,10,0],[1,11,0],[1,12,0],[1,13,0],[1,14,0],[1,15,0],[1,16,0],[1,17,0],
               [2,8,1],[2,9,0],[2,10,2],[2,11,3],[2,12,3],[2,13,1],[2,14,0],[2,15,0],[2,16,2],[2,17,0],
@@ -19,3 +19,10 @@ let data = {
 }
 
 module.exports = data;
+
+
+/* <% for (let i = 0; i < csvData.length; i++) { %>
+  <h2><%= csvData[i].name %></h2>
+  <h2><%= csvData[i].age %></h2>
+  <h2><%= csvData[i].city %></h2>
+<% } %> */

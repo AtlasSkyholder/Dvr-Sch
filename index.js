@@ -5,7 +5,7 @@ const path = require('path');
 
 const app        = express();
 
-const tom = require('./assets/data/tom');
+const data = require('./assets/data/tom');
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname));
@@ -57,8 +57,9 @@ app.post("/", upload.single('myfile'), (req, res) => {
 app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  console.log(csvData);
-  res.render("schedule", { week, csvData, weekNumber, tom });
+  let strData = JSON.stringify(data);
+
+  res.render("schedule", { week, csvData, weekNumber, strData });
 })
 
 app.listen(PORT, function(){

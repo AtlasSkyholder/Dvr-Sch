@@ -31,36 +31,19 @@
       </div>
 
       <div id="board">
-        
+        <% for (let a = 0; a < 7; a++) { %>
+          <div class="column">
+          <% for (let b = 0; b < 10; b++) { %>
+            <div class="divBoard">
+              <p id="<%= a + '' + b %>"></p>
+            </div>
+          <% } %>
+          </div>
+        <% } %>
       </div>
     </div>
 
-
-    <% for (let i = 0; i < csvData.length; i++) { %>
-      <h2><%= csvData[i].name %></h2>
-      <h2><%= csvData[i].age %></h2>
-      <h2><%= csvData[i].city %></h2>
-    <% } %>
-
-
-    <script>
-      console.log("<%= tom.name %>");
-      console.log("<%= tom.schedule %>");
-
-      function add(){
-        let num = parseInt(document.getElementById('wkNum').innerHTML);
-        document.getElementById('wkNum').innerHTML= num + 1;
-      }
-
-      function subtract(){
-        let num = parseInt(document.getElementById('wkNum').innerHTML);
-        if (num > 1) {
-          document.getElementById('wkNum').innerHTML= num - 1;
-        }
-      }
-
-    </script>
-
+    <script type="text/javascript" src="../assets/scripts/app.js" data="<%= strData %>"></script>
 
   </body>
 </html>
