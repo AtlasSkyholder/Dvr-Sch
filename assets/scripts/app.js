@@ -23,9 +23,18 @@ function strToObj(data){
 }
 
 function load(str){
-  let schData = newData.schedule;
+
+  let schData;
+  for ( item of newData) { //here looks for the exact driver and returns their schedule
+    if (item.name === str) {
+      schData = item.schedule;
+    }
+  }
+
+  console.log(schData);
+
   let schArr = [];
-  schData.forEach(single => {
+  schData.forEach(single => {    //here it looks for the schedule between day 1 and day 7
     let num = parseInt(document.getElementById('wkNum').innerHTML);
     if (single[0] >= (((num-1) * 7) +1) && single[0] <= (num *7)){
       schArr.push(single);

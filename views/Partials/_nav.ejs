@@ -2,9 +2,9 @@
   <p>Driver:</p>
   <select name="dayList" onchange="load(value)">
     <option value="">Select driver</option>
-    <option value="tom">Tom</option>
-    <option value="lindsay">Lindsay</option>
-    <option value="drexel">Drexel</option>
+    <% for(let d = 0; d < data.length; d++) {%>
+      <option value="<%= data[d].name %>"><%= data[d].name %></option>
+    <% } %>
   </select>
   <img id="left" src="../../assets/images/left.png" width="100" height="50" onclick="subtract()">
   <p>Week <span id="wkNum"><%- weekNumber %></span></p>
