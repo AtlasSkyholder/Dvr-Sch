@@ -2,15 +2,21 @@ let atrData = document.currentScript.getAttribute('data');
 
 let newData = strToObj(atrData);
 
+let schData; // schedule Data needs to be a global variable so it takes less time to cycle through the weeks. Only gets updated when the driver is changed
+
 function add(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
-  document.getElementById('wkNum').innerHTML= num + 1;
+  num = num + 1;
+  document.getElementById('wkNum').innerHTML= num;
+  updateBoard(num);
 }
 
 function subtract(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
   if (num > 1) {
-    document.getElementById('wkNum').innerHTML= num - 1;
+    num = num - 1;
+    document.getElementById('wkNum').innerHTML= num;
+    updateBoard(num);
   }
 }
 
@@ -24,18 +30,22 @@ function strToObj(data){
 
 function load(str){
 
-  let schData;
   for ( item of newData) { //here looks for the exact driver and returns their schedule
     if (item.name === str) {
       schData = item.schedule;
     }
   }
+  let num = 1;
+  document.getElementById('wkNum').innerHTML= num;
+  updateBoard(num);
 
-  console.log(schData);
+}
+
+function updateBoard (num) {
 
   let schArr = [];
   schData.forEach(single => {    //here it looks for the schedule between day 1 and day 7
-    let num = parseInt(document.getElementById('wkNum').innerHTML);
+
     if (single[0] >= (((num-1) * 7) +1) && single[0] <= (num *7)){
       schArr.push(single);
     }
