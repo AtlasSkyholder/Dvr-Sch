@@ -88,7 +88,43 @@ app.get("/schedule", (req, res) => {
 app.post("/schedule", (req,res) => {
 
   console.log(req.body);
+
+  const name = req.body.dayList;
+  let num = req.body.wkNumber;
+  const day = req.body.daySelect;
   
+  num = (((num-1) * 7) +1);
+
+  let schedule = [];
+
+  for ( item of data) { //here looks for the exact driver and returns their schedule
+    if (item.name === name) {
+      schedule = item.schedule;
+    }
+  }
+
+  let newSch = [];
+  for (let i = 0; i < day; i++) {
+    schedule.forEach(item => {
+      if(item[0] === (num + i)) {
+        newSch.push(item);
+      }
+    });
+  }
+
+  const otherArray = [
+    { Time_Frame: "Day 1 - 2",
+      Pickup: 2,
+      Drop_off: 2,
+      Other: 1
+    }
+  ];
+  const someData = Papa.unparse(otherArray);
+
+  fs.writeFile("./uploads/" + name + "Data.csv", someData, err => {
+  if (err) throw err;
+  console.log("someData table successfully saved!");
+  });
 
 
 });
