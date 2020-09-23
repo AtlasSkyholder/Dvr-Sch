@@ -83,16 +83,13 @@ app.get("/schedule", (req, res) => {
   res.render("schedule", { week, csvData, weekNumber, strData, data });
 });
 
-app.post("/schedule", (req,res) => {
-  
-/*   const animeArray = animeRows.data.map(row => {
-    const { name, anime_id, type, episodes, rating, members } = row;
-    const editedName = name.replace(/,/g, ' ');
 
-    return { name: editedName, anime_id, type, episodes, rating, members }
-  }) */
+
+app.post("/schedule", (req,res) => {
 
   console.log(req.body);
+  
+
 
 });
 

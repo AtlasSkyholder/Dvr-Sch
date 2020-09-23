@@ -8,6 +8,7 @@ function add(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
   num = num + 1;
   document.getElementById('wkNum').innerHTML= num;
+  document.getElementById('hid').value= num;
   updateBoard(num);
 }
 
@@ -16,6 +17,7 @@ function subtract(){
   if (num > 1) {
     num = num - 1;
     document.getElementById('wkNum').innerHTML= num;
+    document.getElementById('hid').value= num;
     updateBoard(num);
   }
 }
@@ -37,6 +39,7 @@ function load(str){
   }
   let num = 1;
   document.getElementById('wkNum').innerHTML= num;
+  document.getElementById('hid').value= num;
   updateBoard(num);
 
 }
@@ -71,3 +74,15 @@ function updateBoard (num) {
 
 }
 
+function submitThis() {
+  $.ajax({
+    url:'/schedule',
+    type:'post',
+    data:$('#nav').serialize(),
+    success:function(){
+      console.log("It worked!!");
+
+    }
+  })
+  return false;
+}

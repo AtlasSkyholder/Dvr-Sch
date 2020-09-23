@@ -1,29 +1,41 @@
-<div id="nav">
+<div>
 
-  <img id="left" src="../../assets/images/left.png" width="100" height="50" onclick="subtract()">
-  <p>Week <span id="wkNum"><%- weekNumber %></span></p>
-  <img id="right" src="../../assets/images/right.png" width="100" height="50" onclick="add()">
+  <form id="nav">
 
-  <form action="/schedule" method="POST">
+    <div>
+      <label for="dayList">Driver:</label>
+      <select id="dayList" name="dayList" onchange="load(value)">
+        <option value="">Select driver</option>
+        <% for(let d = 0; d < data.length; d++) {%>
+          <option value="<%= data[d].name %>"><%= data[d].name %></option>
+        <% } %>
+      </select>
+    </div>
 
-    <label for="dayList">Driver:</label>
-    <select id="dayList" name="dayList" onchange="load(value)">
-      <option value="">Select driver</option>
-      <% for(let d = 0; d < data.length; d++) {%>
-        <option value="<%= data[d].name %>"><%= data[d].name %></option>
-      <% } %>
-    </select>
 
-    <select name="daySelect">
-      <option value="">Select schedule</option>
-      <option value="2">2 days</option>
-      <option value="4">4 days</option>
-      <option value="7">7 days</option>
-      <option value="14">14 days</option>
-      <option value="28">28 days</option>
-    </select>
+      <img id="left" src="../../assets/images/left.png" width="100" height="50" onclick="subtract()">
+      <p>Week <span id="wkNum"><%- weekNumber %></span></p>
+      <img id="right" src="../../assets/images/right.png" width="100" height="50" onclick="add()">
+
+
+    <div>
+      <select name="daySelect">
+        <option value="">Select schedule</option>
+        <option value="2">2 days</option>
+        <option value="4">4 days</option>
+        <option value="7">7 days</option>
+        <option value="14">14 days</option>
+        <option value="28">28 days</option>
+      </select>
+    </div>
+
+
+    <input type="hidden" name="wkNumber" value="<%- weekNumber %>" id="hid">
+
     
-    <input type="submit" value="Submit">
+    <div>
+      <input type="button" value="Submit" onclick="submitThis()">
+    </div>
   </form>
 
 </div>
