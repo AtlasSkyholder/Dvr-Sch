@@ -33,7 +33,7 @@ const upload = multer({ storage: storage });
 
 
 
-const someArray = [
+/* const someArray = [
                 { name: "Fred",
                   array: [1,2,3]},
                   {name: "Dude",
@@ -44,7 +44,7 @@ const someData = Papa.unparse(someArray);
 fs.writeFile("./uploads/someData.csv", someData, err => {
   if (err) throw err;
   console.log("someData table successfully saved!");
-});
+}); */
 
 
 
@@ -90,12 +90,9 @@ app.post("/schedule", (req,res) => {
   console.log(req.body);
 
   const name = req.body.dayList;
-  let num = req.body.wkNumber;
   const day = req.body.daySelect;
-  
-  num = (((num-1) * 7) +1);
 
-  let schedule = [];
+  let schedule = [];  //used to obtain the schedule of the selected person, becomes an array of arrays
 
   for ( item of data) { //here looks for the exact driver and returns their schedule
     if (item.name === name) {
@@ -103,29 +100,42 @@ app.post("/schedule", (req,res) => {
     }
   }
 
-  let newSch = [];
-  for (let i = 0; i < day; i++) {
-    schedule.forEach(item => {
-      if(item[0] === (num + i)) {
-        newSch.push(item);
-      }
-    });
+
+  let count = 0; //for counting the individual arrays
+
+  let arraySum = []; //this array will be used to summarize the events in each group of days
+
+  console.log(' arraySum is : ', arraySum);
+
+/*   for (let i = 0; i < schedule.length; i + day) {
+    let empty = 0;
+    let pickup = 0;
+    let deliver = 0;
+    let other = 0;
+    for (let h = i; h < schedule[i+day]; h++) {
+      
+    }
   }
 
-  const otherArray = [
-    { Time_Frame: "Day 1 - 2",
-      Pickup: 2,
-      Drop_off: 2,
-      Other: 1
-    }
-  ];
-  const someData = Papa.unparse(otherArray);
+  
+
+  let schedSum = schedule.map( item => {
+
+
+    return     { Time_Frame: "Day 1 - 2",
+    Pickup: 2,
+    Drop_off: 2,
+    Other: 1
+  };
+  })
+
+  const someData = Papa.unparse(schedSum);
 
   fs.writeFile("./uploads/" + name + "Data.csv", someData, err => {
   if (err) throw err;
   console.log("someData table successfully saved!");
   });
-
+ */
 
 });
 
