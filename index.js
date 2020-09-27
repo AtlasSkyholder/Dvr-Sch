@@ -6,7 +6,7 @@ const Papa = require('papaparse');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 
-const app        = express();
+const app = express();
 
 const data = require('./assets/data/data');
 
@@ -30,25 +30,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
-
-
-/* const someArray = [
-                { name: "Fred",
-                  array: [1,2,3]},
-                  {name: "Dude",
-                  array: [[4],[5],[6]]}
-              ];
-const someData = Papa.unparse(someArray);
-
-fs.writeFile("./uploads/someData.csv", someData, err => {
-  if (err) throw err;
-  console.log("someData table successfully saved!");
-}); */
-
-
-
-
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -87,8 +68,6 @@ app.get("/schedule", (req, res) => {
 
 app.post("/schedule", (req,res) => {
 
-  console.log(req.body);
-
   const name = req.body.dayList;
   const day = req.body.daySelect;
 
@@ -100,42 +79,49 @@ app.post("/schedule", (req,res) => {
     }
   }
 
-
-  let count = 0; //for counting the individual arrays
-
   let arraySum = []; //this array will be used to summarize the events in each group of days
 
-  console.log(' arraySum is : ', arraySum);
-
-/*   for (let i = 0; i < schedule.length; i + day) {
-    let empty = 0;
+  for (let i = 0; i < schedule.length; i + day) {  //iterating through the schedule to collect the pickup,deliver and otgher data
     let pickup = 0;
     let deliver = 0;
     let other = 0;
-    for (let h = i; h < schedule[i+day]; h++) {
-      
+    for (let h = i; h < i+day; h++) {
+      let item = schedule[h][2];
+      switch(item) {
+        case 0 :
+          break;
+        case 1 :
+          pickup++;
+          break;
+        case 2 :
+          deliver++;
+          break;
+        case 3 :
+          other++;
+          break;
+      }
     }
+    arraySum.push(['Day ' + (i+1) + ' - Day ' + (i+day), pickup, deliver, other]);  // creates an array of the day window with a summary of pickups, deliveries and other
   }
 
-  
+ 
 
-  let schedSum = schedule.map( item => {
+  let schedObj = arraySum.map( item => {    //creating a template for all the data
 
-
-    return     { Time_Frame: "Day 1 - 2",
-    Pickup: 2,
-    Drop_off: 2,
-    Other: 1
+    return     { Time_Frame: item[0],
+    Pickup: item[1],
+    Drop_off: item[2],
+    Other: item[3]
   };
-  })
+  });
 
-  const someData = Papa.unparse(schedSum);
+  const someData = Papa.unparse(schedObj);  // unparsing the template for .csv
 
-  fs.writeFile("./uploads/" + name + "Data.csv", someData, err => {
+  fs.writeFile("./uploads/" + name + "Data.csv", someData, err => {  //writting the .csv file
   if (err) throw err;
   console.log("someData table successfully saved!");
   });
- */
+
 
 });
 

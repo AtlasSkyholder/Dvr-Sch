@@ -39,7 +39,6 @@ function load(str){
   }
   let num = 1;
   document.getElementById('wkNum').innerHTML= num;
-  document.getElementById('hid').value= num;
   updateBoard(num);
 
 }
