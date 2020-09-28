@@ -8,7 +8,6 @@ function add(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
   num = num + 1;
   document.getElementById('wkNum').innerHTML= num;
-  document.getElementById('hid').value= num;
   updateBoard(num);
 }
 
@@ -17,7 +16,6 @@ function subtract(){
   if (num > 1) {
     num = num - 1;
     document.getElementById('wkNum').innerHTML= num;
-    document.getElementById('hid').value= num;
     updateBoard(num);
   }
 }

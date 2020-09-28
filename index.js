@@ -69,7 +69,7 @@ app.get("/schedule", (req, res) => {
 app.post("/schedule", (req,res) => {
 
   const name = req.body.dayList;
-  const day = req.body.daySelect;
+  const day = parseInt(req.body.daySelect);
 
   let schedule = [];  //used to obtain the schedule of the selected person, becomes an array of arrays
 
@@ -81,15 +81,13 @@ app.post("/schedule", (req,res) => {
 
   let arraySum = []; //this array will be used to summarize the events in each group of days
 
-  for (let i = 0; i < schedule.length; i + day) {  //iterating through the schedule to collect the pickup,deliver and otgher data
+  for (let i = 0; i < schedule.length; i = i + (day*10) ) {  //iterating through the schedule to collect the pickup,deliver and otgher data
     let pickup = 0;
     let deliver = 0;
     let other = 0;
-    for (let h = i; h < i+day; h++) {
+    for (let h = i; h < (i+(day*10)); h++) {
       let item = schedule[h][2];
       switch(item) {
-        case 0 :
-          break;
         case 1 :
           pickup++;
           break;
@@ -101,16 +99,14 @@ app.post("/schedule", (req,res) => {
           break;
       }
     }
-    arraySum.push(['Day ' + (i+1) + ' - Day ' + (i+day), pickup, deliver, other]);  // creates an array of the day window with a summary of pickups, deliveries and other
+    arraySum.push(['Day ' + ((i/10)+1) + ' - Day ' + ((i/10)+day), pickup, deliver, other]);  // creates an array of the day window with a summary of pickups, deliveries and other
   }
-
- 
 
   let schedObj = arraySum.map( item => {    //creating a template for all the data
 
     return     { Time_Frame: item[0],
     Pickup: item[1],
-    Drop_off: item[2],
+    DropOff: item[2],
     Other: item[3]
   };
   });
