@@ -113,13 +113,20 @@ app.post("/schedule", (req,res) => {
 
   const someData = Papa.unparse(schedObj);  // unparsing the template for .csv
 
-  fs.writeFile("./uploads/" + name + "Data.csv", someData, err => {  //writting the .csv file
+  csvFile = "./uploads/" + name + "Data.csv";  //the path to the csv file
+
+  fs.writeFile(csvFile, someData, err => {  //writting the .csv file
   if (err) throw err;
   console.log("someData table successfully saved!");
   });
 
+  res.redirect("link");
 
 });
+
+app.get("/link" , (req, res) => {
+  res.render("link", {csvFile});
+})
 
 app.listen(PORT, function(){
   console.log(`Example app listening on port ${PORT}`);
