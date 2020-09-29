@@ -4,7 +4,11 @@
   background-color: pink;
   display: flex;
   flex-wrap: nowrap;
+}
 
+#nav form {
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .week {

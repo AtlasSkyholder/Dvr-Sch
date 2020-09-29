@@ -1,13 +1,13 @@
-<div>
+<div id="nav">
 
-  <form action="/schedule" method="POST" id="nav">
+  <form action="/schedule" method="POST" >
 
     <div>
       <label for="dayList">Driver:</label>
       <select id="dayList" name="dayList" onchange="load(value)">
         <option value="">Select driver</option>
-        <% for(let d = 0; d < data.length; d++) {%>
-          <option value="<%= data[d].name %>"><%= data[d].name %></option>
+        <% for(let d = 0; d < localData.length; d++) {%>
+          <option value="<%= localData[d].name %>"><%= localData[d].name %></option>
         <% } %>
       </select>
     </div>
@@ -34,7 +34,7 @@
       <input type="submit" value="Submit">
     </div>
 
-    <a href="/"><button>Home!</button></a>
   </form>
+  <a href="/"><button>Home!</button></a>
 
 </div>

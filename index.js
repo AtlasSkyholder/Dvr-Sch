@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 let csvFile; // name for file to be parsed after POST
+let csvFileName; // name for created csv File for download
 let csvData; // name for data of csv
 let weekNumber = 1; // variable for cycling through the weeks
 
@@ -32,15 +33,27 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 app.get("/", (req, res) => {
+  if(csvFileName !== undefined) {  //if the user comes back to the home page from the download page, it will delete the csv file there, prevent /uploads from getting too big
+    fs.unlink(csvFileName, (err) => { 
+      if(err) {
+        console.error(err);
+        return;
+      }
+      //file removed
+    });
+  }
+
   res.render("index");
 });
 
 app.post("/", upload.single('myfile'), (req, res) => {
+
+if (req.body.inputType === 'file') {  //here it checks if the inputType was file or apiCall, if file, then it will parse the data and send it upstream, if not, then use local data/ fake api call
   const testFilePath = req.file.path;
   const testFile = fs.readFileSync(testFilePath, "utf8");
 
   const testRows = {};
-  Papa.parse(testFile, {
+  Papa.parse(testFile, {  
     header: true,
     skipEmptyLines: true,
     complete: function(results) {
@@ -51,6 +64,16 @@ app.post("/", upload.single('myfile'), (req, res) => {
   })
 
   csvData = testRows.data;
+
+  fs.unlink(testFilePath, (err) => { //delete the uploaded file to keep /uploads from overflowing with files
+    if(err) {
+      console.error(err);
+      return;
+    }
+    //file removed
+  });
+}
+
   res.redirect("schedule");
 
 });
@@ -58,10 +81,18 @@ app.post("/", upload.single('myfile'), (req, res) => {
 
 app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  let localData; // just a generic local variable to either take on csvData (parsed data from selected file), or data (local data, just a fake api call)
+  let strData;
 
-  let strData = JSON.stringify(data);
+  if (csvData !== undefined) {
+    localData = csvData;
+  } else {
+    localData = data;
+  }
 
-  res.render("schedule", { week, csvData, weekNumber, strData, data });
+  strData = JSON.stringify(localData);
+
+  res.render("schedule", { week, weekNumber, strData, localData });
 });
 
 
@@ -81,7 +112,7 @@ app.post("/schedule", (req,res) => {
 
   let arraySum = []; //this array will be used to summarize the events in each group of days
 
-  for (let i = 0; i < schedule.length; i = i + (day*10) ) {  //iterating through the schedule to collect the pickup,deliver and otgher data
+  for (let i = 0; i < schedule.length; i = i + (day*10) ) {  //iterating through the schedule to collect the pickup,deliver and other data
     let pickup = 0;
     let deliver = 0;
     let other = 0;
@@ -113,9 +144,9 @@ app.post("/schedule", (req,res) => {
 
   const someData = Papa.unparse(schedObj);  // unparsing the template for .csv
 
-  csvFile = "./uploads/" + name + "Data.csv";  //the path to the csv file
+  csvFileName = "./uploads/" + name + "Data.csv";  //the path to the csv file
 
-  fs.writeFile(csvFile, someData, err => {  //writting the .csv file
+  fs.writeFile(csvFileName, someData, err => {  //writting the .csv file
   if (err) throw err;
   console.log("someData table successfully saved!");
   });
@@ -126,8 +157,8 @@ app.post("/schedule", (req,res) => {
 
 app.get("/link" , (req, res) => {
 
-  let fileName = csvFile.replace('./uploads/', '');
-  res.render("link", {csvFile, fileName});
+  let fileName = csvFileName.replace('./uploads/', '');
+  res.render("link", {csvFileName, fileName});
 })
 
 app.listen(PORT, function(){

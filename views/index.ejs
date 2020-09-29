@@ -7,8 +7,14 @@
 
     <h3>Show a file-select field which allows multiple files:</h3>
     <form action="/" method="POST" enctype="multipart/form-data">
-      <label for="myfile">Select files:</label>
-      <input type="file" id="myfile" name="myfile" multiple><br><br>
+      <input type="radio" id="file" name="inputType" value="file">
+      <label for="file">.csv File</label>
+      <label for="myfile">Select file:</label>
+      <input type="file" id="myfile" name="myfile"><br><br>
+
+      <input type="radio" id="apiCall" name="inputType" value="apiCall">
+      <label for="apiCall">Database</label><br><br>
+
       <input type="submit" value="Submit">
     </form>
     
