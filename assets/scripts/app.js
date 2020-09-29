@@ -67,19 +67,4 @@ function updateBoard (num) {
     }
     
   }
-
-
-}
-
-function submitThis() {
-  $.ajax({
-    url:'/schedule',
-    type:'post',
-    data:$('#nav').serialize(),
-    success:function(){
-      console.log("It worked!!");
-
-    }
-  })
-  return false;
 }

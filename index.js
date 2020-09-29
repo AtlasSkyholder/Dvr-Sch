@@ -125,7 +125,9 @@ app.post("/schedule", (req,res) => {
 });
 
 app.get("/link" , (req, res) => {
-  res.render("link", {csvFile});
+
+  let fileName = csvFile.replace('./uploads/', '');
+  res.render("link", {csvFile, fileName});
 })
 
 app.listen(PORT, function(){

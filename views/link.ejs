@@ -2,9 +2,13 @@
 <html>
   <head>
     <title>Link to CSV</title>
-
+    <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" />
   </head>
   <body>
-    <a href="<%= csvFile %>" download><%= csvFile %></a>
+    <div id="link">
+      <h3>Download your file here:</h3>
+      <a href="<%= csvFile %>" download><%= fileName %></a>
+      <a href="/"><button>Home!</button></a>
+    </div>
   </body>
 </html>
