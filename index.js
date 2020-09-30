@@ -18,6 +18,7 @@ let csvFile; // name for file to be parsed after POST
 let csvFileName; // name for created csv File for download
 let csvData; // name for data of csv
 let weekNumber = 1; // variable for cycling through the weeks
+let fileArray = [];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -64,6 +65,41 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
   })
 
   csvData = testRows.data;
+
+  console.log(csvData);
+
+  let tempArray = [];  // temporary array to push in objects of names to then be reduced to an array of unique objects
+
+  for (let i = 0; i < csvData.length; i++) {  // creates an object with key name, pushes all the objects into the array to be reduced after
+    let tempObj={};
+    tempObj['name'] = csvData[i].name;
+    tempArray.push(tempObj);
+  }
+
+  fileArray = [...new Set(tempArray.map(item => JSON.stringify(item)))].map(single => JSON.parse(single));  // reducing the array of objects with key names to unique array
+
+  for (let h = 0; h < fileArray.length; h++) {  
+    fileArray[h]['schedule'] = [];
+    for (let k = 0; k < csvData.length; k++) {
+      let c;
+      if(fileArray[h].name === csvData[k].name){
+        let a = JSON.parse(csvData[k].schedule);
+        console.log(a);
+        c = a.map(item => {
+          let b = [];
+          b.push(parseInt(csvData[k].day));
+          item = b.concat(item);
+          return item;
+        })
+      }
+      console.log(c);
+      fileArray[h].schedule = fileArray[h].schedule.concat(c);
+      console.log(fileArray);
+    }
+  }
+
+  console.log(fileArray);
+
 
   fs.unlink(testFilePath, (err) => { //delete the uploaded file to keep /uploads from overflowing with files
     if(err) {
