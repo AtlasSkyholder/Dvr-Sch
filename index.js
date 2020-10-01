@@ -68,7 +68,7 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
 
   console.log(csvData);
 
-  let tempArray = [];  // temporary array to push in objects of names to then be reduced to an array of unique objects
+  /* let tempArray = [];  // temporary array to push in objects of names to then be reduced to an array of unique objects
 
   for (let i = 0; i < csvData.length; i++) {  // creates an object with key name, pushes all the objects into the array to be reduced after
     let tempObj={};
@@ -98,7 +98,7 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
     }
   }
 
-  console.log(fileArray);
+  console.log(fileArray); */
 
 
   fs.unlink(testFilePath, (err) => { //delete the uploaded file to keep /uploads from overflowing with files
