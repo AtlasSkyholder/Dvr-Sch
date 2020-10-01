@@ -44,6 +44,8 @@ app.get("/", (req, res) => {
     });
   }
 
+  csvData = undefined;  // reset csvData in case I want to choose data api
+
   res.render("index");
 });
 
@@ -66,9 +68,7 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
 
   csvData = testRows.data;
 
-  console.log(csvData);
-
-  /* let tempArray = [];  // temporary array to push in objects of names to then be reduced to an array of unique objects
+  let tempArray = [];  // temporary array to push in objects of names to then be reduced to an array of unique objects
 
   for (let i = 0; i < csvData.length; i++) {  // creates an object with key name, pushes all the objects into the array to be reduced after
     let tempObj={};
@@ -78,28 +78,24 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
 
   fileArray = [...new Set(tempArray.map(item => JSON.stringify(item)))].map(single => JSON.parse(single));  // reducing the array of objects with key names to unique array
 
-  for (let h = 0; h < fileArray.length; h++) {  
-    fileArray[h]['schedule'] = [];
+  fileArray.forEach(obj => {  // builds each obj in fileArray with a schedule
+    obj['schedule'] = [];
+    let newArr = [];
     for (let k = 0; k < csvData.length; k++) {
-      let c;
-      if(fileArray[h].name === csvData[k].name){
-        let a = JSON.parse(csvData[k].schedule);
-        console.log(a);
-        c = a.map(item => {
-          let b = [];
-          b.push(parseInt(csvData[k].day));
-          item = b.concat(item);
-          return item;
-        })
+      let c = [];
+      if(obj.name === csvData[k].name){  // if the names match, then it adds a day to the start of each array, then pushes them to c
+        let a = JSON.parse(csvData[k].schedule);  // parses the string that represented an array of arrays for a single day
+        for(let n = 0; n < a.length; n ++) {
+          let d = parseInt(csvData[k].day);
+          let e = a[n];
+          let b = [d, e[0], e[1]];
+          c.push(b);
+        }
+        newArr = newArr.concat(c);  //here it concats to a larger array to make the schedule array
       }
-      console.log(c);
-      fileArray[h].schedule = fileArray[h].schedule.concat(c);
-      console.log(fileArray);
     }
-  }
-
-  console.log(fileArray); */
-
+    obj.schedule = newArr;  // adds the schedule array to the object schedule key
+  })
 
   fs.unlink(testFilePath, (err) => { //delete the uploaded file to keep /uploads from overflowing with files
     if(err) {
@@ -121,10 +117,12 @@ app.get("/schedule", (req, res) => {
   let strData;
 
   if (csvData !== undefined) {
-    localData = csvData;
+    localData = fileArray;
   } else {
     localData = data;
   }
+
+  console.log(localData);
 
   strData = JSON.stringify(localData);
 

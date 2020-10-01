@@ -7,13 +7,16 @@ let schData; // schedule Data needs to be a global variable so it takes less tim
 function add(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
   num = num + 1;
+  if(num > 52) {  //prevent the value to pass 52 weeks
+    num = 52;
+  }
   document.getElementById('wkNum').innerHTML= num;
   updateBoard(num);
 }
 
 function subtract(){
   let num = parseInt(document.getElementById('wkNum').innerHTML);
-  if (num > 1) {
+  if (num > 1) {  //checks if num value above 1, if yes then will subtract
     num = num - 1;
     document.getElementById('wkNum').innerHTML= num;
     updateBoard(num);
