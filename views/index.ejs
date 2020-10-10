@@ -2,21 +2,42 @@
 <html>
   <head>
     <title>Driver Scheduller</title>
+    <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
 
-    <h3>Show a file-select field which allows multiple files:</h3>
-    <form action="/" method="POST" enctype="multipart/form-data">
-      <input type="radio" id="file" name="inputType" value="file">
-      <label for="file">.csv File</label>
-      <label for="myfile">Select file:</label>
-      <input type="file" id="myfile" name="myfile"><br><br>
+    <h1>Driver-o-matic 3000</h1>
+    <h2>The one stop shop to summarize your driver's schedule</h2>
 
-      <input type="radio" id="apiCall" name="inputType" value="apiCall">
-      <label for="apiCall">Database</label><br><br>
+    <div id="home">
+      <h4>How do you wish to load up your driver's schedule?</h4>
+      <div class="form-group">
+      <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="radio" id="file" name="inputType" value="file">
+        <label for="file">.csv File.</label>
+        <label for="myfile">Select file:</label>
+        <input style="width:90%;" class="btn btn-primary" type="file" id="myfile" name="myfile"><br><br>
+  
+        <input type="radio" id="apiCall" name="inputType" value="apiCall">
+        <label for="apiCall">Database</label><br><br>
+  
+        <input class="btn btn-primary" type="submit" value="Submit">
+      </form>
+      </div>
+    </div>
 
-      <input type="submit" value="Submit">
-    </form>
+    <% if (alert === 1) {%>
+      <div  id="message">
+        <div class="alert alert-danger alert-dismissible fade in">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+          <strong>Warning!</strong> You chose the wrong file. Select a .csv file.
+        </div>  
+      </div>
+      
+    <% } %>
     
   </body>
 </html>

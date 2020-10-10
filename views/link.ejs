@@ -3,12 +3,15 @@
   <head>
     <title>Link to CSV</title>
     <link rel="stylesheet" href="/assets/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
   <body>
     <div id="link">
-      <h3>Download your file here:</h3>
-      <a href="<%= csvFileName %>" download><%= fileName %></a>
-      <a href="/"><button>Home!</button></a>
+      <p class="report">Download the Driver Report here:</p>
+      <a class="report" href="<%= csvFileName %>" download><%= fileName %></a>
+      <a class="btn btn-primary report" href="/" role="button">Home!</a>
     </div>
   </body>
 </html>

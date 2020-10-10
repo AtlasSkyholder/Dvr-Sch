@@ -14,11 +14,20 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
+///////////////////////////
+// global variables
+///////////////////////////
+
 let csvFile; // name for file to be parsed after POST
 let csvFileName; // name for created csv File for download
 let csvData; // name for data of csv
 let weekNumber = 1; // variable for cycling through the weeks
 let fileArray = [];
+let alert = 0; // variable for alert for loading wrong file
+
+//////////////////////////////////
+// middleware
+//////////////////////////////////
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -33,6 +42,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+
+///////////////////////////
+// Home Page
+///////////////////////////
+
 app.get("/", (req, res) => {
   if(csvFileName !== undefined) {  //if the user comes back to the home page from the download page, it will delete the csv file there, prevent /uploads from getting too big
     fs.unlink(csvFileName, (err) => { 
@@ -46,7 +61,9 @@ app.get("/", (req, res) => {
 
   csvData = undefined;  // reset csvData in case I want to choose data api
 
-  res.render("index");
+  res.render("index", {alert});
+
+  alert = 0;
 });
 
 app.post("/", upload.single('myfile'), (req, res) => {
@@ -55,8 +72,14 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
   const testFilePath = req.file.path;
   const testFile = fs.readFileSync(testFilePath, "utf8");
 
-  const testRows = {};
-  Papa.parse(testFile, {  
+  let typeArray = csvFile.split('.');  // check if a file is .csv or a wrong file type
+  if (typeArray[typeArray.length-1] !== 'csv') {  //if file is not .csv, redirect back home and update alert to display a warning message
+    alert = 1;
+    res.redirect('/');
+  }
+
+  const testRows = {};  // object to have data passed into
+  Papa.parse(testFile, {  // parse the csv file and turns the values into data and passes it into the testRows object
     header: true,
     skipEmptyLines: true,
     complete: function(results) {
@@ -111,6 +134,12 @@ if (req.body.inputType === 'file') {  //here it checks if the inputType was file
 });
 
 
+
+//////////////////////////////////////
+// Schedule Page
+//////////////////////////////////////
+
+
 app.get("/schedule", (req, res) => {
   const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   let localData; // just a generic local variable to either take on csvData (parsed data from selected file), or data (local data, just a fake api call)
@@ -121,8 +150,6 @@ app.get("/schedule", (req, res) => {
   } else {
     localData = data;
   }
-
-  console.log(localData);
 
   strData = JSON.stringify(localData);
 
@@ -189,12 +216,25 @@ app.post("/schedule", (req,res) => {
 
 });
 
+
+////////////////////////////////////////
+// Download File Page a.k.a. Link Page
+////////////////////////////////////////
+
+
 app.get("/link" , (req, res) => {
 
-  let fileName = csvFileName.replace('./uploads/', '');
+  let fileName = csvFileName.replace('./uploads/', '');  // variable to obtain the file name and use it with the anchor tag
   res.render("link", {csvFileName, fileName});
 })
 
+
+
+///////////////////////////
+// PORT
+///////////////////////////
+
+
 app.listen(PORT, function(){
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Dvr-Sch app listening on port ${PORT}`);
 });
